@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,16 +7,133 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="casualMen.css">
+    <link rel="stylesheet" href="{% static '/css/womenShirts.css'  %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
-    <script src="casual.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
+    </script>
     <script type="text/javascript">
 
+        window.addEventListener("load", function () {
+
+
+            let id = null;
+            const elem = document.getElementById("voice_assis_bg");
+            let pos = 0;
+            clearInterval(id);
+            id = setInterval(frame, 3000);
+            function frame() {
+                if (pos == 1) {
+                    clearInterval(id);
+                } else {
+
+                    pos++;
+                    elem.style.bottom = pos + 'px';
+
+                }
+            }
+
+
+        })
+
+        function speak(Text) {
+
+            const utterance = new SpeechSynthesisUtterance(Text);
+            utterance.rate = 1;
+
+
+            speechSynthesis.speak(utterance);
+
+
+        }
+
+        function runSpeechRecognition() {
+            // get output div reference
+            var output = document.getElementById("output");
+            // get action element reference
+            var action = document.getElementById("action");
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                action.innerHTML = "<small>listening, please speak...</small>";
+            };
+
+            recognition.onspeechend = function () {
+                action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                recognition.stop();
+
+
+
+            }
+
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function (event) {
+                var transcript = event.results[0][0].transcript;
+               
+                output.innerHTML = "<b>Text:</b> " + transcript + "<br/>";
+                output.classList.remove("hide");
+
+                hello(transcript);
+
+                return transcript;
+            };
+
+
+            // start recognition on command "hello assistant"
+
+            recognition.start();
+
+
+
+
+        }
+
+
+
+
+
+
+        function hello(transcript) {
+            var transcript = transcript
+
+            var URL = "{% url 'search' %}";
+            var data = { 'transcript': transcript };
+            $.get(URL, data, function (response) {
+                const str = response
+                const array_of_result_to_be_shown = str.split(' ');
+                console.log(typeof array_of_result_to_be_shown)
+                console.log(array_of_result_to_be_shown)
+                const gender = array_of_result_to_be_shown[0]
+                const type = array_of_result_to_be_shown[1]
+                console.log(gender)
+                if (( gender === "men" || gender === "mens" || gender === "men's" ) && (type === "shirt's" || type === "shirts" || type === "shirt")) {
+                    window.location.href = "{% url 'shirts' %}"
+                    speak("showing results for " + transcript);
+
+                }
+                else if ((gender === "women" || gender === "womens" || gender === "women's" ) && (type === "shirt's" || type === "shirts" || type === "shirt")) {
+                    window.location.href = "{% url 'womenshirts' %}"
+                    speak("showing results for " + transcript);
+
+                }
+                else if(gender === "home"){
+                    window.location.href = "{% url 'homepage' %}"
+                    speak("showing results for " + transcript);
+                }
+
+                else {
+                    speak("There is no search result for" + transcript + "Sorry, for the inconvenience");
+                }
+            });
+
+        }
 
     </script>
 
@@ -34,11 +152,11 @@
 
                         <li class="navbar_listitem Home"><a href="">HOME</a>
                             <ul class="navbar_listitemdrop">
-                                <li>hello
+                                <li>about
 
                                 </li>
-                                <li>hello</li>
-                                <li>hello</li>
+                                <li>sales</li>
+                                
                             </ul>
 
                         </li>
@@ -69,8 +187,7 @@
 
                     </ul>
                     <div class="sign_btn">
-                        <li><a href="#">SIGN-UP</a></li>
-                        <li><a href="#">SIGN-IN</a></li>
+                        <li><a href="">{{request.session.Firstname}}</a></li>
 
                     </div>
 
@@ -86,7 +203,7 @@
 
     </div>
     <div class="Section_2_wrapper">
-        <h1 class="Section_2_heading"> Mens tshirts</h1>
+        <h1 class="Section_2_heading"> Women tshirts</h1>
         <h2 class="filters_heading">Filters</h2>
         <h2 class="product_heading"> Products</h2>
         <div class="Section_2">
@@ -107,7 +224,7 @@
                 <input type="checkbox" id="color5" name="color5" value="Yellow">
                 <label for="color5"> Yellow
                 </label><br>
-                
+
                 <br>
                 <h3>Brand</h3>
                 <input type="checkbox" id="brand1" name="brand1" value="Levis">
@@ -121,7 +238,7 @@
                 <input type="checkbox" id="brand5" name="brand5" value="Nike">
                 <label for="brand5"> Nike
                 </label><br><br>
-                
+
 
 
 
@@ -138,7 +255,7 @@
                 <div class="item " id="item_3">
 
                 </div>
-                <div class="item "id="item_4">
+                <div class="item " id="item_4">
 
                 </div>
                 <div class="item " id="item_5">
@@ -146,39 +263,27 @@
                 </div>
                 <div class="item " id="item_6">
 
-                </div>
-                <div class="item " id="item_7">
+
 
                 </div>
-                <div class="item " id="item_8">
 
-                </div>
-                <div class="item " id="item_9">
 
-                </div>
-                <div class="item " id="item_10">
-
-                </div>
 
             </div>
 
-
-
         </div>
 
-    </div>
 
 
-
-    <div id="voice_assis_bg" class="VoiceAssistant">
-        <h3>Hello {{request.session.Firstname}} how may I help you?</h3>
-        <h4 class="content"> {{msg}}</h4>
-
-        <h4 class="listen" style="color: #df001a;">Listening....</h4>
-
-        <button onclick="runSpeechRecognition()" class="ask_btn">Ask? </button>
-        <div id="output" class="hide"></div>
-    </div>
+        <div id="voice_assis_bg" class="VoiceAssistant">
+            <h3>Hello {{request.session.Firstname}} how may I help you?</h3>
+            <h4 class="content"> {{msg}}</h4>
+    
+    
+    
+            <button onclick="runSpeechRecognition()" class="ask_btn">Ask? </button>
+            <div id="output" class="hide"></div>
+        </div>
     </div>
 
 

@@ -1,9 +1,11 @@
 from email import message
 from logging.config import listen
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
 from .models import *
 import speech_recognition as sr
 import pyttsx3
+
 
 # Create your views here.
 def registerView(request):
@@ -27,7 +29,7 @@ def InsertData(request):
         else:
             if password== password2:
                 newuser = customer.objects.create(firstname = fname , lastname = lname , username = uname , email = email , gender=gender,password=password,password2=password2)
-                message = "user regiter Successfully"
+                message = "user regitered Successfully"
 
                 return render(request , "app/index.html" , {'msg': message})
             else:
@@ -62,27 +64,51 @@ def LoginUser(request):
             message = "user does not exist"
             return render(request , "app/register.html", {'msg':message})
 
-listener = sr.Recognizer()
-microphone = sr.Microphone()
-engine = pyttsx3.init()
 
-def AssistantVoice(request):
-    try:
-        with microphone as source:
-            voice = listener.listen(source)
-            command = listener.recognize_google(voice)
-            command = command.lower()
-            if 'shirts ' or 'shirt' in command:
-                return shirtpage(request)
+#list of all the reachable items
+
+products = ['home','women','men','mens','womens',"men's", "women's",'shirts','shirt' ,'mens shirt' , 'men shirt' , 'mens shirts' , 'men shirts','mens tshirt' , 'men tshirt' , 'mens tshirts' , 'men tshirts' ,'womens shirt' , 'women shirt' , 'womens shirts' , 'women shirts' ,'womens tshirt' , 'women tshirt' , 'womens tshirts' , 'women tshirts' , 'red' , 'blue' , 'green']
+
+def searchRequest(request):
+    if request.method == 'GET':
+        if 'transcript' in request.GET:
+            transcript = request.GET['transcript']
+            # doSomething with pieFact here...
+            transcript_to_be_searched = list(transcript.split(" "))
+
+            item_to_be_searched= checkList(transcript_to_be_searched)
+            item_to_be_searched = list(item_to_be_searched)
+            listToStr_transcript_to_be_passed = ' '.join([str(elem) for elem in item_to_be_searched])
+            if True:
+                print(listToStr_transcript_to_be_passed)
+                print(transcript_to_be_searched)
+                print(item_to_be_searched)
+                return HttpResponse(listToStr_transcript_to_be_passed)
+            else:     
+                print(transcript)
+            return HttpResponse('success') # if everything is OK
+    # nothing went well
+    return HttpResponse('FAIL!!!!!')
+
+def shirtspage(request):
+    
+    return render(request,"app/shirts.html")
+
+def womenshirtspage(request):
+    return render(request,"app/womenShirts.html")
+
+def homepage(request):
+    return render(request , "app/home.html" )
+
+def checkList(transcript):
+    length_of_the_transcript= len(transcript)
+    for item in transcript:
+        for product in products:
+            if(item == product):
+                yield product
+                continue
+            elif(item!=product):
+                continue
             else:
-                return render(request , "app/home.html",{'msg': command})
-
-            
-
-    except:
-        return render(request , "app/home.html")
-
-def shirtpage(request ):
-    return render(request , "app/shirts.html")
-
+                return product
 

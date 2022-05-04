@@ -7,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <link rel="stylesheet" href="{% static '/css/register.css'  %}">
+    
 </head>
 
 <body>
+
 
 
     <div class="wrapper" >
@@ -18,7 +20,8 @@
             <div class="image-holder"  >
                 <img src="{% static '/images/regimage.jpg' %}"
                     alt="image">
-                
+                    <img src="{% static '/images/boyshopimage.png' %}"
+                    alt="image">
             </div>
 
             <form action="{% url 'insert' %}" method="POST">
@@ -35,7 +38,7 @@
 
                 </div>
                 <div class="form-wrapper">
-                    <input type="text email" placeholder="Email" name="email" class="form-control">
+                    <input type="email" placeholder="Email" name="email" id="email" class="form-control ">
 
                 </div>
                 <div class="form-wrapper">

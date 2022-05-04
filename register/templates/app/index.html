@@ -42,7 +42,7 @@ Author URL: http://w3layouts.com
                         <center><h4 style="color: red; padding-bottom: 10px;">{{msg}}</h4></center>
                         <form action="{% url 'login' %}" method="POST">
                             {% csrf_token %}
-                            <input type="text email" class="email" name="email" placeholder="email" required="">
+                            <input type="email" class="email" name="email" placeholder="email" required="">
                             <input type="password" class="password" name="password" placeholder="User Password"
                                 required="">
                             <button class="btn" type="submit">Log In</button>

@@ -1,476 +1,372 @@
 {% load static %}
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>How To Create A Basic Bootstrap Ecommerce Website - Free Time Learning</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=yes">
-    <link rel="stylesheet" type="text/css" href="{% static '/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static '/css/home.css'  %}" />
-    <link rel="stylesheet" type="text/css" href="{% static '/css/font-awesome.min.css'  %}" />
-    <meta name="description"
-        content="How To Create A Basic Bootstrap Ecommerce Website, Basic Ecommerce Website, bootstrap websites, free bootstrap ecommerce websites, sample bootstrap websites." />
-    <meta name="keywords"
-        content="bootstrap ecommerce websites, free bootstrap websites, free bootstrap ecommerce websites, free responsive websites, basic bootstrap ecommerce website, how to create a bootstrap website, top bootstrap websites, basic bootstrap website teplates, bootstrap, bootstrap referene websites, practice bootstrap websites, how to create a website, how to create static website, how to create bootstrap websites, how to create bootstrap 4 website, how to create a material design website, best websites, how to create a bootstrap 3 website. " />
-    <link rel="canonical"
-        href="http://www.freetimelearning.com/references/bootstrap-websites/bootstrap-ecommerce-website/index.html">
-    <link rel="alternate" hreflang="en-gb"
-        href="http://www.freetimelearning.com/references/bootstrap-websites/bootstrap-ecommerce-website/index.html">
-    <link rel="alternate" hreflang="en"
-        href="http://www.freetimelearning.com/references/bootstrap-websites/bootstrap-ecommerce-website/index.html">
-    <meta property="og:locale" content="en_US" />
-    <meta property="og:title" content="How To Create A Basic Bootstrap Ecommerce Website - Free Time Learning" />
-    <meta property="og:type" content="Free Time Learning | Free Time Learn" />
-    <meta property="og:site_name"
-        content="http://www.freetimelearning.com/references/bootstrap-websites/bootstrap-ecommerce-website/index.html" />
-    <meta property="article:author" content="Free Time Learning" />
-    <meta property="article:section" content="How To Create A Basic Bootstrap Ecommerce Website - Free Time Learning" />
-    <meta property="og:url"
-        content="http://www.freetimelearning.com/references/bootstrap-websites/bootstrap-ecommerce-website/index.html" />
-    <script type="text/javascript">
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-100094943-1', 'auto');
-        ga('send', 'pageview');
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static '/css/home.css' %}" type="text/css" media="all" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merienda+One&family=Tangerine:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/358462e846.js" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js">
     </script>
-    
+
+    <script type="text/javascript">
+
+        
+        window.addEventListener("load", function () {
+            
+                    
+                    let id = null;
+                    const elem = document.getElementById("voice_assis_bg");
+                    let pos = 0;
+                    clearInterval(id);
+                    id = setInterval(frame,3000);
+                    function frame() {
+                        if (pos == 1) {
+                            clearInterval(id);
+                        } else {
+                           
+                            pos++;
+                            elem.style.bottom = pos + 'px';
+                            
+                        }
+                    }
+                
+            
+        })
+        
+        function speak(Text){
+            
+            const utterance = new SpeechSynthesisUtterance(Text);
+            utterance.rate = 1;
+            
+            
+            speechSynthesis.speak(utterance);
+                
+            
+        }
+        
+         function  runSpeechRecognition() {
+            // get output div reference
+            var output = document.getElementById("output");
+            // get action element reference
+            var action = document.getElementById("action");
+            // new speech recognition object
+            var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+
+            // This runs when the speech recognition service starts
+            recognition.onstart = function () {
+                action.innerHTML = "<small>listening, please speak...</small>";
+            };
+
+            recognition.onspeechend = function () {
+                action.innerHTML = "<small>stopped listening, hope you are done...</small>";
+                recognition.stop();
+
+
+
+            }
+
+            // This runs when the speech recognition service returns result
+            recognition.onresult = function (event) {
+                var transcript = event.results[0][0].transcript;
+                
+                output.innerHTML = "<b>Text:</b> " + transcript + "<br/>";
+                output.classList.remove("hide");
+
+                hello(transcript);
+
+                return transcript;
+            };
+            
+
+            // start recognition on command "hello assistant"
+            
+            recognition.start();
+            
+            
+
+            
+        }
+
+        
+        
+        
+        
+
+        function hello(transcript) {
+            var transcript = transcript
+
+            var URL = "{% url 'search' %}";
+            var data = { 'transcript': transcript };
+            $.get(URL, data, function (response) {
+                const str = response
+                const array_of_result_to_be_shown = str.split(' ');
+                console.log(typeof array_of_result_to_be_shown)
+                console.log(array_of_result_to_be_shown)
+                const gender = array_of_result_to_be_shown[0]
+                const type = array_of_result_to_be_shown[1]
+                console.log(gender)
+                if (( gender === "men" || gender === "mens" || gender === "men's" ) && (type === "shirt's" || type === "shirts" || type === "shirt")) {
+                    window.location.href = "{% url 'shirts' %}"
+                    speak("showing results for " + transcript);
+
+                }
+                else if ((gender === "women" || gender === "womens" || gender === "women's" ) && (type === "shirt's" || type === "shirts" || type === "shirt")) {
+                    window.location.href = "{% url 'womenshirts' %}"
+                    speak("showing results for " + transcript);
+
+                }
+               
+                else {
+                    speak("There is no search result for" + transcript + "Sorry, for the inconvenience");
+                }
+            });
+
+        }
+        
+
+
+    </script>
+
+
+
 
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="main_shadow">
-            <!-- Start Header -->
-            <div class="row main_header">
-                <div class="col-md-3 col-sm-3 col-xs-12 logo" align="center">
-                    <a href="#" target="_blank"><img
-                            src="{% static '/images/logo.jpg' %}" class="img-responsive" alt="Logo"></a>
-                </div>
-                <div class="col-md-9 col-sm-9 col-xs-12">
+    <div id="container">
+        <div class="all_sections" id="header">
+            <div class="nav">
 
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-top hidden-xs" align="center">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Search Here">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn_search"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div>
+                <div class="wrapper">
+                    <nav class="navbar">
+                        <li><a href="#">KAIV CLOTHING</a></li>
+
+                        <ul class="navbar_list">
+
+                            <li class="navbar_listitem Home"><a href="">HOME</a>
+                                <ul class="navbar_listitemdrop">
+                                    <li>about
+
+                                    </li>
+                                    <li>sales</li>
+                                </ul>
+
+                            </li>
+                            <li class="navbar_listitem"><a href="">MEN</a>
+                                <ul class="navbar_listitemdrop">
+                                    <li>T-Shirts
+
+                                    </li>
+                                    <li>Shirts</li>
+                                    <li>Jeans</li>
+                                </ul>
+                            </li>
+                            <li class="navbar_listitem"><a href="">WOMEN</a>
+                                <ul class="navbar_listitemdrop">
+                                    <li>T-Shirts
+
+                                    </li>
+                                    <li>Shirts</li>
+                                    <li>Jeans</li>
+                                </ul>
+
+                            </li>
+                            <li class="navbar_listitem"><a href="">CONTACTUS</a>
+
+                            </li>
+
+
+
+                        </ul>
+                        <div class="sign_btn">
+                            
+
+                            <li><a href="">{{request.session.Firstname}}</a></li>
                         </div>
-                        <div class="col-md-7 col-sm-7 col-xs-12" align="right">
-                            <div class="row hidden-xs">
-                                <div class="row">
-                                    <div class="header-top pull-right">
-                                        <ul>
-                                            <li><a href=""><i class="fa fa-facebook"></i>&nbsp;</a></li>
-                                            <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                                            <li><a href=""><i class="fa fa-linkedin"></i></a></li>
-                                            <li><a href=""><i class="fa fa-google"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="clearfix" style="margin:2px 0px;"></div>
-                            <div class="row" align="center">
-                                <div class="col-md-7 col-sm-7 col-xs-12">
-                                    <div class="header-right-bottom">
-                                        <ul>
-                                            <li><a href="#!">{{request.session.Firstname}}</a></li>
-                                            <li style="border-right:none;"><a href="#!">{{request.session.Email}}</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-5 col-sm-5 col-xs-12">
-                                    <div class="header-right-bottom">
-                                        <i class="fa fa-cart-plus cart_size"></i> &nbsp;
-                                        <i class="fa fa-inr inr_size"></i> <span class="amount">- /-</span>
-                                    </div>
-                                </div>
-                            </div>
+
+
+                    </nav>
+
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="all_sections" id="section_1">
+            <h1>Quote Of The Day</h1>
+            <p>Fashion is like eating, you shouldn't stick to the same menu. </p>
+        </div>
+        <div class="all_sections" id="section_2">
+            <div class="section_2_wrapper">
+                <h1>Men Collections</h1>
+                <div class="container_collections">
+                    <div class="Authentic_men">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Ethnic Collection</p>
+
+
                         </div>
                     </div>
+                    <div class="casual_men">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Casual Collection</p>
 
+
+                        </div>
+                    </div>
+                    <div class="formal_men">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Formal Collection</p>
+
+
+                        </div>
+                    </div>
                 </div>
+
             </div>
-            <!-- End Header -->
+        </div>
+        <div class="all_sections section_4" id="section_2 ">
+            <div class="section_2_wrapper">
+                <h1>Women Collections</h1>
+                <div class="container_collections">
+                    <div class="Authentic_women">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Ethnic Collection</p>
 
-            <!-- Start Menu bar -->
-            <nav class="navbar navbar-default">
-                <div class="navbar-header">
-                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <!-- <a href="#!" class="navbar-brand">Logo</a>-->
+
+                        </div>
+                    </div>
+                    <div class="casual_women">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Casual Collection</p>
+
+
+                        </div>
+                    </div>
+                    <div class="formal_women">
+                        <div style="display: flex; align-items: center; justify-content: center; top: 36vh; position: relative; height: 150px; width: 22vw; background-color: white;"
+                            class="ethnic">
+                            <p style=" font-size: 2.5rem; color: black;"> Formal Collection</p>
+
+
+                        </div>
+                    </div>
                 </div>
-                <div id="navbarCollapse" class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav">
-                        <li> <a href="#" target="_blank">Home</a></li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Men's Wear &nbsp;
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!"> Levis</a></li>
-                                <li><a href="#!"> Louis Vuitton</a></li>
-                                <li><a href="#!"> H&M</a></li>
-                                <li><a href="#!"> AND</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Women's Wear &nbsp;
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!"> Levis</a></li>
-                                <li><a href="#!">Louis Vuitton</a></li>
-                                <li><a href="#!"> H&M</a></li>
-                                <li><a href="#!"> AND</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Kids Shoes &nbsp;
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Formal Shoes &nbsp;
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Top Brands &nbsp;
-                                <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#!"> Gucci</a></li>
-                                <li><a href="#!"> Prada</a></li>
-                                <li><a href="#!"> </a></li>
-                                <li><a href="#!"> Barnd Name</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#!">Products</a></li>
-                        <li><a href="#!">Services</a></li>
-                        <li><a href="#!">Gallery</a></li>
-                        <li><a href="#!">Branches</a></li>
+
+            </div>
+        </div>
+        <div class="all_sections" id="section_3">
+            <div class="section_3_wrapper">
+                <h1>Gallery</h1>
+                <div class="container_gallery">
+                    <div class="box1"></div>
+                    <div class="box2"></div>
+                    <div class="box3"></div>
+                    <div class="box4"></div>
+                    <div class="box5"></div>
+                    <div class="box6"></div>
+                    <div class="box7"></div>
+                    <div class="box8"></div>
+                    <div class="box9"></div>
+                    <div class="box10"></div>
+                    <div class="box11"></div>
+                    <div class="box12"></div>
+                    <div class="box13"></div>
+                    <div class="box14"></div>
+                    <div class="box15"></div>
+                    <div class="box16"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="all_sections" id="footer">
+
+            <div class="footer_wraper">
+                <div>
+                    <h3>ONLINE SHOPING</h3>
+                    <ul>
+                        <li>Men</li>
+                        <li>Women</li>
                     </ul>
+
                 </div>
-            </nav>
+                <div>
+                    <h3>USEFUL LINKS</h3>
+                    <ul>
+                        <li>Contact us</li>
+                        <li>FAQ</li>
+                        <li>Privacy Policy</li>
+                        <li>Track Order</li>
+                        <li>Returns</li>
+                    </ul>
 
-
-
-
-            <!-- End menu bar -->
-
-
-            <!----- Start Slider (or) Banner ------>
-            <div class="row">
-                <div class="slider">
-                    <div class="slider-padding">
-                        <div style="padding-top:30px;"><a href="#" class="btn">Click Here!</a></div>
-                    </div>
                 </div>
+                <div>
+                    <h3>KEEP IN TOUCH</h3>
+                    <ul>
+                        <i class="fa-brands fa-facebook"></i>
+                        <i class="fa-brands fa-instagram"></i>
+                        <i class="fa-brands fa-twitter"></i>
+                        <i class="fa-brands fa-youtube"></i>
+                    </ul>
+
+                </div>
+
+
+
             </div>
-            <!----- End Slider (or) Banner ------>
-
-            <!----- Start Content ------>
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-12">
-
-                    <div id='content_left_menu'>
-                        <div class="categories">All Categories</div>
-                        <ul>
-                            <li class='has-sub'><a href='#'><span>Featured brands</span></a>
-                                <ul>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                </ul>
-                            </li>
-                            <li class='has-sub'><a href='#'><span>Men's Wear</span></a>
-                                <ul>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                </ul>
-                            </li>
-                            <li class='has-sub'><a href='#'><span>Women's Shoes</span></a>
-                                <ul>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                </ul>
-                            </li>
-                            <li class='has-sub'><a href='#'><span>Kids's Shoes</span></a>
-                                <ul>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                </ul>
-                            </li>
-                            <li class='has-sub'><a href='#'><span>Shoe care & accessories</span></a>
-                                <ul>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                    <li><a href='#!'><span>Lorem Ipsum</span></a></li>
-                                </ul>
-                            </li>
-                            <li><a href='#'><span>Formal Shoes</span></a></li>
-                            <li><a href='#'><span>Party Wear Shoes</span></a></li>
-                            <li><a href='#'><span>Leather Shoes</span></a></li>
-                            <li><a href='#'><span>International Shoes Store</span></a></li>
-                        </ul>
-                    </div>
-
-                </div>
-
-                <div class="col-lg-9 col-md-9 col-sm-8 col-xs-12">
-                    <div class="row" align="center">
-                        <div class="categories-right">All Products</div>
-                        <div class="content-right">
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/1.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">Red T-shirt</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.
-
-                                    </div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 1500.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/2.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">White T-shirt</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.</div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 1000.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/3.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">Jeans</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.</div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 2500.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/4.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">Long Kurti</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.</div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 2500.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/5.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">Lorem Ipsum</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.</div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 1500.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12">
-                                <div class="content-right-product">
-                                    <div><img src="{% static '/images/6.jpg' %}" class="img-responsive" alt="Top Shoes">
-                                    </div>
-                                    <div class="content-right-product-h4">Lorem Ipsum</div>
-                                    <div class="content-right-product-p">Lorem Ipsum is simply dummy text of the
-                                        printing and typesetting industry.</div>
-                                    <div class="content-right-product-amount"><i class="fa fa-inr"
-                                            style="color:#df001a;"></i> 1500.00</div>
-                                    <div class="cart" align="center"><a href="" class="btn">Add to Cart</a></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!------ End Content ------->
-
-            <!------ Start Footer ------->
-            <div class="row footer">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="footer-parts">
-                        <div class="footer-parts-h4">About Us</div>
-                        <div class="about-footer">Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="footer-parts">
-                        <div class="footer-parts-h4">Extra Links</div>
-                        <ul>
-                            <li><a href="#">Blog</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Terms &amp; Conditions</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="footer-parts">
-                        <div class="footer-parts-h4">Extra Links</div>
-                        <ul>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Diclimer</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="footer-parts">
-                        <div class="footer-parts-h4">Social Links</div><br />
-                        <div style="padding-left:20px; font-size:22px;">
-                            <a href="#" target="_blank"><i
-                                    class="fa fa-facebook fa_footer"></i></a> &nbsp; &nbsp;
-                            <a href="#" target="_blank"><i
-                                    class="fa fa-linkedin fa_footer"></i></a> &nbsp; &nbsp;
-                            <a href="#" target="_blank"><i
-                                    class="fa fa-twitter fa_footer"></i></a> &nbsp; &nbsp;
-                            <a href="#" target="_blank"><i
-                                    class="fa fa-google-plus fa_footer"></i></a>
-                        </div>
-                        <div style="padding-left:20px; padding-top:15px; font-size:22px;">
-                            <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Subscribe Now">
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn_search"><i class="fa fa-search"></i></button>
-                                </span>
-                            </div><br />
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <div class="copyrights">
-                    <div class="col-md-8 col-sm-8 col-xs-12">
-                        <div class="copyrights-left">
-                            &copy; 2018. All rights reserved by <a href="#"
-                                target="_blank">Free Time Learn</a>.
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        <div class="copyrights-right">
-                            Designed by <a href="#" target="_blank">F T L</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!------ End Footer ------->
-        </div>
-
-        <div id="voice_assis_bg" class="VoiceAssistant">
-            <h3>Hello {{request.session.Firstname}}</h3>
-            <h4 class="content"> {{msg}}</h4>
-
-            <h4 class="listen" style="color: #df001a;">Listening....</h4>
-            <button onclick="location.href ='{% url 'voice_script' %}'" class="ask_btn">Ask?</button>
-
 
 
         </div>
+
     </div>
 
-    <script type="text/javascript" src="http://www.freetimelearning.com/js/jquery-1.11.3.min.js"></script>
-    <script type="text/javascript" src="{% static  '/css/bootstrap.min.js' % }"></script>
+    <div id="voice_assis_bg" class="VoiceAssistant">
+        <h3 class="greet">Hello {{request.session.Firstname}} how may I help you?</h3>
+        <h4 class="content"> {{msg}}</h4>
+
+       
+
+        <button onclick="runSpeechRecognition()" class="ask_btn">Ask? </button>
+        <div id="output" class="hide"></div>
+    </div>
+    </div>
 
 
-    <script type="text/javascript">
-        $(function () {
-            $(".dropdown").hover(
-                function () {
-                    $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
-                    $(this).toggleClass('open');
-                    $('b', this).toggleClass("caret caret-up");
-                },
-                function () {
-                    $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
-                    $(this).toggleClass('open');
-                    $('b', this).toggleClass("caret caret-up");
-                });
-        });
 
-    </script>
 
-    <!-- Start Content Left Categories -->
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(document).ready(function () {
-
-                $('#content_left_menu> ul > li ul').each(function (index, e) {
-                    var count = $(e).find('li').length;
-                    var content = '<span class="cnt">' + count + '</span>';
-                    $(e).closest('li').children('a').append(content);
-                });
-                $('#content_left_menuul ul li:odd').addClass('odd');
-                $('#content_left_menuul ul li:even').addClass('even');
-                $('#content_left_menu> ul > li > a').click(function () {
-                    $('#content_left_menuli').removeClass('active');
-                    $(this).closest('li').addClass('active');
-                    var checkElement = $(this).next();
-                    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-                        $(this).closest('li').removeClass('active');
-                        checkElement.slideUp('normal');
-                    }
-                    if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-                        $('#content_left_menuul ul:visible').slideUp('normal');
-                        checkElement.slideDown('normal');
-                    }
-                    if ($(this).closest('li').find('ul').children().length == 0) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- End Content Left Categories -->
 </body>
 
 </html>
